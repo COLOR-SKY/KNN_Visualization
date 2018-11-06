@@ -13,6 +13,7 @@ global side_length; side_length = 400 #Initial size of the graph
 global graphX, graphY; graphX, graphY = 500, 400 #Initial location of the KNN graph
 global test_num; test_num = 0 #Keep the record of how many testcases were been tested
 global train_num; train_num = 800 # The number of training data
+global nb_num; nb_num = 5 # The number of neighbors
 def rule(test_case):
     r,g,b = test_case[0], test_case[1], test_case[2]
     return r < 100 and b > 100 or g < 120 and b < 80
@@ -56,7 +57,7 @@ def draw():
     #Draw results
     offsetX, offsetY = 800, 200
     
-    global pause
+    global pause, nb_num, test_num
     global actual_predicted_pairs, testing_data
     testing_data = (generate_data(1)) if pause == False else testing_data
     for test_case in testing_data:
@@ -68,15 +69,15 @@ def draw():
     popMatrix()
     pushMatrix()
     fill(0); yGap = 25; textSize(20); textAlign(LEFT)
+    text("neighbor_num  = " + str(nb_num), offsetX, offsetY - yGap*2)
     text("training_size = " + str(train_num), offsetX, offsetY - yGap)
     text("accuracy = " + str(accuracy), offsetX, offsetY)
     text("recall = " + str(recall), offsetX, offsetY + yGap)
     text("precision = " + str(precision),offsetX, offsetY + yGap*2)
-    text("Test :" + str(testing_data), offsetX, offsetY + yGap*3)
-    text("Test #:" + str(test_num), offsetX, offsetY + yGap*4)
+    text("Test : " + str(testing_data), offsetX, offsetY + yGap*3)
+    text("Test# : " + str(test_num), offsetX, offsetY + yGap*4)
     popMatrix()
-    
-    global test_num
+
     test_num = test_num + 1 if pause == False else test_num
         
     
@@ -119,7 +120,8 @@ class Model:
             popMatrix()
         
     def predict(self, test_case):
-        return self.KNN(test_case, k = 5)
+        global nb_num
+        return self.KNN(test_case, k = nb_num)
 
     def Dist(self, test_case, train_case):
         return sqrt((test_case[0] - train_case[0])**2 + (test_case[1] - train_case[1])**2 + (test_case[2] - train_case[2])**2)
