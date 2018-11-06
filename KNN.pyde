@@ -170,7 +170,23 @@ def mousePressed():
 def mouseWheel(event):
     global side_length
     side_length += event.getCount()*50
-    
+def keyPressed():
+    global nb_num, graphX, graphY, pause
+    if keyCode == UP:
+        nb_num += 1
+    if keyCode == DOWN:
+        nb_num = nb_num - 1  if nb_num > 1 else 1
+    if key == 'a':
+        graphX -= 50
+    if key == 'd':
+        graphX += 50
+    if key == 'w':
+        graphY -= 50
+    if key == 's':
+        graphY += 50
+    if key == ' ':
+        pause = False if pause == True else True
+
 def generate_data(number_of_test_cases):
     data = []
     for _ in range(number_of_test_cases):
