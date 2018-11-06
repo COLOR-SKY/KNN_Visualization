@@ -1,4 +1,4 @@
-# Author: Haitian Yan
+# Author: Height Yan
 # Date: 2018/11/05
 import random
 random.seed(0)
